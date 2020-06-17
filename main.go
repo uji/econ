@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/exec"
+	"syscall"
 )
 
 var (
@@ -27,5 +29,31 @@ func main() {
 
 	// parse json
 
-	// ran docker container
+  runContainer("vim", nil)
+}
+
+type mountDir struct {
+  name string
+  volume string
+}
+
+func runContainer(img string, dir []mountDir){
+	args := []string{
+    "docker",
+		"run",
+		"-it",
+    "--rm",
+		// "--mount",
+		// "source=$(VOLUME),target=/work",
+		"--mount",
+		"source=vim,target=/root",
+		"--name",
+		"vim",
+		img,
+	}
+  bin, err := exec.LookPath("docker")
+  if err != nil {
+    panic(err)
+  }
+  syscall.Exec(bin, args, os.Environ())
 }
