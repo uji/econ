@@ -1,4 +1,4 @@
-module convim
+module edicon
 
 go 1.14
 
