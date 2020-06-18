@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -16,7 +15,6 @@ func runContainer(config Config){
     "--rm",
   }
   opts := strings.Split(config.RunOption, " ")
-  fmt.Println(opts)
   args2 := make([]string, 0, len(config.Dirs)*2 + 1)
   for _, dir := range config.Dirs {
     args2 = append(args2, "--mount")
