@@ -8,6 +8,7 @@ import (
 type Config struct {
   Img string `json:"img"`
   Dirs []Dir `json:"dirs"`
+  RunOption string `json:"runOption"`
 }
 
 type Dir struct {

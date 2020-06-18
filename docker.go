@@ -1,34 +1,30 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 	"syscall"
 )
 
-func runContainer(img string, dirs []Dir){
+func runContainer(config Config){
 	args1 := []string{
     "docker",
 		"run",
 		"-it",
     "--rm",
   }
-  args3 := []string{
-    "--mount",
-		"source=edicon,target=/root",
-    "--workdir",
-    "/work",
-		"--name",
-		"edicon",
-		img,
-	}
-  args2 := make([]string, 0, len(dirs)*2)
-  for _, dir := range dirs {
+  opts := strings.Split(config.RunOption, " ")
+  fmt.Println(opts)
+  args2 := make([]string, 0, len(config.Dirs)*2 + 1)
+  for _, dir := range config.Dirs {
     args2 = append(args2, "--mount")
     args2 = append(args2, "source=" + dir.Volume + ",target=/work/" + dir.Name)
   }
-  args := append(args1, args2...)
-  args = append(args, args3...)
+  args := append(args1, opts...)
+  args = append(args, args2...)
+  args = append(args, config.Img)
 
   bin, err := exec.LookPath("docker"); if err != nil {
     panic(err)

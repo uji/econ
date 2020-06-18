@@ -35,5 +35,5 @@ func main() {
     panic(err)
   }
 
-  runContainer(c.Img, c.Dirs)
+  runContainer(c)
 }
