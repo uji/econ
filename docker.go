@@ -14,23 +14,26 @@ func runContainer(img string, dirs []Dir){
     "--rm",
   }
   args3 := []string{
-     "--mount",
-		"source=vim,target=/root",
+    "--mount",
+		"source=edicon,target=/root",
+    "--workdir",
+    "/work",
 		"--name",
-		"vim",
+		"edicon",
 		img,
 	}
   args2 := make([]string, 0, len(dirs)*2)
   for _, dir := range dirs {
     args2 = append(args2, "--mount")
-    args2 = append(args2, "source=" + dir.Volume + ",target=/work" )
+    args2 = append(args2, "source=" + dir.Volume + ",target=/work/" + dir.Name)
   }
   args := append(args1, args2...)
   args = append(args, args3...)
 
-  bin, err := exec.LookPath("docker")
-  if err != nil {
+  bin, err := exec.LookPath("docker"); if err != nil {
     panic(err)
   }
-  syscall.Exec(bin, args, os.Environ())
+  if err := syscall.Exec(bin, args, os.Environ()); err != nil {
+    panic(err)
+  }
 }
