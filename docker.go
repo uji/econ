@@ -8,24 +8,26 @@ import (
 )
 
 func runContainer(config Config) {
-	args1 := []string{
+	cmd := []string{
 		"docker",
 		"run",
 		"-it",
 		"--rm",
 	}
-	opts := strings.Split(config.RunOption, " ")
-	args2 := make([]string, 0, len(config.Dirs)*2+len(config.Envs)*2)
+	runOpts := strings.Split(config.RunOption, " ")
+	mountOpts := make([]string, 0, len(config.Dirs)*2+len(config.Envs)*2)
 	for _, dir := range config.Dirs {
-		args2 = append(args2, "--mount")
-		args2 = append(args2, "source="+dir.Volume+",target=/work/"+dir.Name)
+		mountOpts = append(mountOpts, "--mount")
+		mountOpts = append(mountOpts, "source="+dir.Volume+",target=/work/"+dir.Name)
 	}
 	for _, e := range config.Envs {
-		args2 = append(args2, "--env")
-		args2 = append(args2, e)
+		mountOpts = append(mountOpts, "--env")
+		mountOpts = append(mountOpts, e)
 	}
-	args := append(args1, opts...)
-	args = append(args, args2...)
+	args := make([]string, 0, 5+len(runOpts)+len(config.Dirs)*2+len(config.Envs)*2)
+	args = append(args, cmd...)
+	args = append(args, runOpts...)
+	args = append(args, mountOpts...)
 	args = append(args, config.Img)
 
 	bin, err := exec.LookPath("docker")
