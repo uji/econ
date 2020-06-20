@@ -15,11 +15,11 @@ func usage() {
 }
 
 func main() {
-  home, err := homedir.Dir()
-  if err != nil {
-    panic(err)
-  }
-  configFilePath := flag.String("f", home + "/.edicon.json", "config file path for run container")
+	home, err := homedir.Dir()
+	if err != nil {
+		panic(err)
+	}
+	configFilePath := flag.String("f", home+"/.edicon.json", "config file path for run container")
 
 	flag.Usage = usage
 	flag.Parse()
@@ -30,10 +30,10 @@ func main() {
 	}
 
 	// parse json
-  c, err := parseConfigFile(*configFilePath)
-  if err != nil {
-    panic(err)
-  }
+	c, err := parseConfigFile(*configFilePath)
+	if err != nil {
+		panic(err)
+	}
 
-  runContainer(c)
+	runContainer(c)
 }

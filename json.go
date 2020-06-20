@@ -6,26 +6,27 @@ import (
 )
 
 type Config struct {
-  Img string `json:"img"`
-  Dirs []Dir `json:"dirs"`
-  RunOption string `json:"runOption"`
+	Img       string   `json:"img"`
+	Dirs      []Dir    `json:"dirs"`
+	Envs      []string `json:"envs"`
+	RunOption string   `json:"runOption"`
 }
 
 type Dir struct {
-  Name string `json:"name"`
-  Volume string `json:"volume"`
+	Name   string `json:"name"`
+	Volume string `json:"volume"`
 }
 
 func parseConfigFile(path string) (Config, error) {
-  raw, err := ioutil.ReadFile(path)
-  if err != nil {
-    return Config{}, err
-  }
+	raw, err := ioutil.ReadFile(path)
+	if err != nil {
+		return Config{}, err
+	}
 
-  var c Config
-  if err := json.Unmarshal(raw, &c); err != nil{
-    return Config{}, err
-  }
+	var c Config
+	if err := json.Unmarshal(raw, &c); err != nil {
+		return Config{}, err
+	}
 
-  return c, nil
+	return c, nil
 }
