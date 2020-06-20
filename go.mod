@@ -1,4 +1,4 @@
-module github.com/uji/edicon
+module github.com/uji/econ
 
 go 1.14
 

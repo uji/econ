@@ -10,7 +10,7 @@ import (
 
 func usage() {
 	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
-	fmt.Fprintf(os.Stderr, "\tedicon [flag] # run vim container refer to ~/.edicon.json\n")
+	fmt.Fprintf(os.Stderr, "\tecon [flag] # run vim container refer to ~/.econ.json\n")
 	flag.PrintDefaults()
 }
 
@@ -19,7 +19,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	configFilePath := flag.String("f", home+"/.edicon.json", "config file path for run container")
+	configFilePath := flag.String("f", home+"/.econ.json", "config file path for run container")
 
 	flag.Usage = usage
 	flag.Parse()
