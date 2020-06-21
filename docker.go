@@ -24,6 +24,7 @@ func runContainer(config Config) {
 		mountOpts = append(mountOpts, "--env")
 		mountOpts = append(mountOpts, e)
 	}
+
 	args := make([]string, 0, 5+len(runOpts)+len(config.Dirs)*2+len(config.Envs)*2)
 	args = append(args, cmd...)
 	args = append(args, runOpts...)
