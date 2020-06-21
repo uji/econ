@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"os"
@@ -10,7 +11,7 @@ import (
 
 func usage() {
 	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
-	fmt.Fprintf(os.Stderr, "\tecon [flag] # run vim container refer to ~/.econ.json\n")
+	fmt.Fprintf(os.Stderr, "\tecon [flag] [volume] # run vim container refer to ~/.econ.json\n")
 	flag.PrintDefaults()
 }
 
@@ -24,7 +25,7 @@ func main() {
 	flag.Usage = usage
 	flag.Parse()
 
-	if flag.NArg() != 0 {
+	if flag.NArg() != 1 {
 		usage()
 		os.Exit(2)
 	}
@@ -35,5 +36,9 @@ func main() {
 		panic(err)
 	}
 
-	runContainer(c)
+	if !isVolume(flag.Arg(0)) {
+		panic(errors.New("docker volume is not found"))
+	}
+
+	runContainer(c, flag.Arg(0))
 }

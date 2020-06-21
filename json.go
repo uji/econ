@@ -7,14 +7,8 @@ import (
 
 type Config struct {
 	Img       string   `json:"img"`
-	Dirs      []Dir    `json:"dirs"`
 	Envs      []string `json:"envs"`
 	RunOption string   `json:"runOption"`
-}
-
-type Dir struct {
-	Name   string `json:"name"`
-	Volume string `json:"volume"`
 }
 
 func parseConfigFile(path string) (Config, error) {
