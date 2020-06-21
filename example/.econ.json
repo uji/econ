@@ -1,6 +1,6 @@
 {
   "img": "vim",
-  "runOption": "--mount source=econ-vim-volume,target=/root --workdir /work --name econ-vim",
+  "runOption": "--mount source=econ-vim-volume,target=/root",
   "envs": [
     "KEY1=VALUE1",
     "KEY2=VALUE2"

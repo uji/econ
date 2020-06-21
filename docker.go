@@ -7,23 +7,28 @@ import (
 	"syscall"
 )
 
+const (
+	workDir = "/econ"
+)
+
 func runContainer(config Config, volume string) {
 	cmd := []string{
 		"docker",
 		"run",
 		"-it",
 		"--rm",
+		"--workdir=" + workDir,
+		"--mount",
+		"source=" + volume + ",target=" + workDir,
 	}
 	runOpts := strings.Split(config.RunOption, " ")
 	mountOpts := make([]string, 0, 2+len(config.Envs)*2)
-	mountOpts = append(mountOpts, "--mount")
-	mountOpts = append(mountOpts, "source="+volume+",target=/work")
 	for _, e := range config.Envs {
 		mountOpts = append(mountOpts, "--env")
 		mountOpts = append(mountOpts, e)
 	}
 
-	args := make([]string, 0, 5+len(runOpts)+2+len(config.Envs)*2)
+	args := make([]string, 0, len(cmd)+len(runOpts)+len(config.Envs)*2+1)
 	args = append(args, cmd...)
 	args = append(args, runOpts...)
 	args = append(args, mountOpts...)
