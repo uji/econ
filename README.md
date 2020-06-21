@@ -13,4 +13,4 @@ go get -u github.com/uji/econ
 # Usage
 
 1. put `.econ.json` on your home directory ([json example](https://github.com/uji/econ/blob/master/example/.econ.json))
-2. run command `econ`
+2. run command `econ [volume name]`
