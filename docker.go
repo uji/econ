@@ -30,7 +30,9 @@ func runContainer(config Config, volume string) {
 
 	args := make([]string, 0, len(cmd)+len(runOpts)+len(config.Envs)*2+1)
 	args = append(args, cmd...)
-	args = append(args, runOpts...)
+	if config.RunOption != "" {
+		args = append(args, runOpts...)
+	}
 	args = append(args, mountOpts...)
 	args = append(args, config.Img)
 
